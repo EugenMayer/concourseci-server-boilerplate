@@ -1,12 +1,21 @@
 version: "2"
 
 services:
-  keygen:
+  config:
     image: eugenmayer/concourse-keygen
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
     restart: 'no' # required
+
+  vault:
+    image: vault:0.9
+    cap_add:
+      - IPC_LOCK
+    ports: ["8200:8200"]
+    volumes:
+      - ./keys/vault:/vault/config
+    command: vault server -config /vault/config/vault.hcl
 
   db:
     image: postgres:10.1
@@ -21,7 +30,7 @@ services:
     image: concourse/concourse:3.6.0
     command: web
     depends_on:
-      - keygen
+      - config
       - db
     volumes:
       - concourse-keys-web:/concourse-keys
@@ -39,7 +48,7 @@ services:
     image: concourse/concourse:3.6.0
     privileged: true
     depends_on:
-      - keygen
+      - config
       - web
     command: worker
     volumes:

@@ -1,0 +1,39 @@
+version: "2"
+
+services:
+  config:
+    environment:
+      VALUT_DO_GENERATE: 1
+    volumes:
+      - concourse-keys-vault:/concourse-keys/vault
+  vault:
+    restart: unless-stopped # required so that it retries until conocurse-db comes up
+    image: vault:0.9.0
+    cap_add:
+      - IPC_LOCK
+    depends_on:
+      - config
+    ports:
+      - 8200:8200
+    volumes:
+      - concourse-keys-vault:/vault/config
+    command: vault server -config /vault/config/vault.hcl
+  web:
+    # ensure we know where the self signed cert is
+    command: web --vault-ca-cert /vault/config/server.crt
+    depends_on:
+      - vault
+      - config
+    environment:
+      CONCOURSE_VAULT_URL: https://vault:8200
+      CONCOURSE_VAULT_TLS_INSECURE_SKIP_VERIFY: "true"
+      CONCOURSE_VAULT_AUTH_BACKEND: approle
+      CONCOURSE_VAULT_PATH_PREFIX: /secret/concourse
+      #CONCOURSE_VAULT_CLIENT_CERT:
+      #CONCOURSE_VAULT_CLIENT_KEY:
+    volumes:
+      # needed to share the self signed cert
+      - concourse-keys-vault:/vault/config
+volumes:
+  concourse-keys-vault:
+    driver: local
