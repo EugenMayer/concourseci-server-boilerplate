@@ -14,6 +14,8 @@ now login with the cli against our local server
 update fly    
     
     fly -t lite sync
+    
+Adjustments can be done by editing the .env file    
         
 ## create a pipeline    
 
