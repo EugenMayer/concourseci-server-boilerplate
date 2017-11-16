@@ -3,7 +3,6 @@ platform: linux
 params:
   VAULT_VALUE1:
   VAULT_VALUE2:
-  VAULT_VALUE3:
   VAULT_WONTWORK1:
 
 image_resource:
@@ -24,5 +23,4 @@ run:
   - |
     echo ${VAULT_VALUE1}
     echo ${VAULT_VALUE2}
-    echo ${VAULT_VALUE3}
     echo ${VAULT_WONTWORK1}
