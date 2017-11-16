@@ -59,3 +59,22 @@ set a value of your desire
     
     vault write secret/concourse/test value=test
     
+    
+## Examples
+
+### vault
+
+start the stack and login
+
+    docker-compose up
+    fly -t lite login -c http://172.31.31.254:8080 -u concourse -p changeme
+
+create our test-value in the vault    
+
+    docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/myvalue value=foo'
+
+add the pipeline to our concourse
+    
+    fly sp -t lite configure -c examples/vault-based/pipeline.yml  -p main -n    
+    
+Now just login into you concourse, unpause the pipeline and trigger the build, you should see a echo foo` in the logs    

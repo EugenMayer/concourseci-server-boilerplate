@@ -1,0 +1,16 @@
+jobs:
+  - name: vault-test
+    serial: true
+    build_logs_to_retain: 100
+    plan:
+    - get: boilerplate
+    - task: test-vault
+      file: boilerplate/examples/vault-based/tasks/task1.yml
+      params:
+        VALUT_VALUE: ((myvalue))
+
+resources:
+  - name: boilerplate
+    type: git
+    source:
+      uri: https://github.com/EugenMayer/concourseci-server-boilerplate

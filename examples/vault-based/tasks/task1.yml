@@ -1,0 +1,22 @@
+platform: linux
+
+params:
+  VALUT_VALUE:
+
+image_resource:
+  type: docker-image
+  source:
+    repository: alpine
+    tag: 3.6
+
+inputs:
+
+outputs:
+
+run:
+  path: /bin/sh
+  user: root
+  args:
+  - '-lc'
+  - |
+    echo $VALUT_VALUE
