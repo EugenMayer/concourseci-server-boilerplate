@@ -8,7 +8,8 @@ jobs:
       file: boilerplate/examples/vault-based/tasks/task1.yml
       params:
         VAULT_VALUE1: ((firstvalue))
-        VAULT_VALUE2: ((nested/secondvalue))
+        VAULT_VALUE2: ((lower_level_secondvalue))
+        VAULT_WONTWORK1: ((nested/value))
 
 resources:
   - name: boilerplate
