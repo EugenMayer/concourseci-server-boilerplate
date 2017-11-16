@@ -9,6 +9,7 @@ jobs:
       params:
         VAULT_VALUE1: ((firstvalue))
         VAULT_VALUE2: ((lower_level_secondvalue))
+        # this value wont work, since concourseci does not support nested values - do not use them
         VAULT_WONTWORK1: ((nested/value))
 
 resources:
