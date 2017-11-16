@@ -7,7 +7,7 @@ jobs:
     - task: echo-vault-value
       file: boilerplate/examples/vault-based/tasks/task1.yml
       params:
-        VALUT_VALUE: ((myvalue))
+        VAULT_VALUE: ((myvalue))
 
 resources:
   - name: boilerplate

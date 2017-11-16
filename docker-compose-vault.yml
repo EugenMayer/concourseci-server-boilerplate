@@ -21,6 +21,7 @@ services:
 #      - 8200:8200
     volumes:
       - vault-server-config:/vault/config
+      - vault-server-data:/var/file
     command: vault server -config /vault/config/vault.hcl
   web:
     # ensure we know where the self signed cert is
@@ -40,6 +41,8 @@ services:
       # needed to share the self signed cert and the auth cert
       - vault-client-config:/vault/client
 volumes:
+  vault-server-data:
+    driver: local
   vault-server-config:
     driver: local
   vault-client-config:
