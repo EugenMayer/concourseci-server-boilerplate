@@ -1,7 +1,8 @@
 platform: linux
 
 params:
-  VAULT_VALUE:
+  VAULT_VALUE1:
+  VAULT_VALUE2:
 
 image_resource:
   type: docker-image
@@ -19,4 +20,5 @@ run:
   args:
   - '-lc'
   - |
-    echo ${VAULT_VALUE}
+    echo ${VAULT_VALUE1}
+    echo ${VAULT_VALUE2}

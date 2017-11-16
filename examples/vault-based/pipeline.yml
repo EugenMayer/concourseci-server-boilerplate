@@ -7,7 +7,8 @@ jobs:
     - task: echo-vault-value
       file: boilerplate/examples/vault-based/tasks/task1.yml
       params:
-        VAULT_VALUE: ((myvalue))
+        VAULT_VALUE1: ((firstvalue))
+        VAULT_VALUE2: ((nested/secondvalue))
 
 resources:
   - name: boilerplate
