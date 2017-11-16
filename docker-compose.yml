@@ -55,7 +55,7 @@ services:
     command: worker
     volumes:
       - concourse-keys-worker:/concourse-keys
-      - concourse-worker-state:/worker-state
+      - concourse-worker1-state:/worker-state
     environment:
       CONCOURSE_TSA_HOST: web
 
@@ -66,6 +66,7 @@ volumes:
     driver: local
   concourse-keys-worker:
     driver: local
-  concourse-worker-state:
+  concourse-worker1-state:
     driver: local
+
 
