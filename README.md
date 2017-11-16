@@ -59,6 +59,18 @@ set a value of your desire
     
     vault write secret/concourse/test value=test
     
+### testing client access
+
+since the above is all done using the server token, you can try the client token too
+
+    docker-compose exec config bash
+    
+    export VAULT_CLIENT_CERT=/vault/concourse/cert.pem 
+    export VAULT_CLIENT_KEY=/vault/concourse/key.pem 
+    export VAULT_ADDR=https://vault:8200
+    export VAULT_CACERT=/vault/concourse/server.crt
+    
+    vault read secret/concourse/main/main/myvalue
     
 ## Examples
 
@@ -71,10 +83,15 @@ start the stack and login
 
 create our test-value in the vault    
 
-    docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/myvalue value=foo'
+    docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/main/myvalue value=foo'
 
 add the pipeline to our concourse
     
-    fly sp -t lite configure -c examples/vault-based/pipeline.yml  -p main -n    
+    # deploy the pipline
+    fly sp -t lite configure -c examples/vault-based/pipeline.yml  -p main -n
+    # unpause the pipeline    
+    fly -t lite unpause-pipeline -p main
+    # trigger the job and watch the logs
+    fly -t lite trigger-job -j main/test-vault -w
     
-Now just login into you concourse, unpause the pipeline and trigger the build, you should see a echo foo` in the logs    
+You should see a echo foo` in the logs    

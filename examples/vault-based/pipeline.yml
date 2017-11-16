@@ -4,7 +4,7 @@ jobs:
     build_logs_to_retain: 100
     plan:
     - get: boilerplate
-    - task: test-vault
+    - task: echo-vault-value
       file: boilerplate/examples/vault-based/tasks/task1.yml
       params:
         VALUT_VALUE: ((myvalue))
