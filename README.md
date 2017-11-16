@@ -1,5 +1,10 @@
 ## start
 
+This will start a concourse server right up, including vault and vault preconfigured
+
+    docker-compose up
+    
+    
 ## setup 
 
 now install the cli
@@ -37,3 +42,20 @@ so for example, assuming we have a job in pipeline `main` named `builder-image-b
 
     fly -t lite intercept -j main/builder-image-build
      
+## vault access and setting values
+
+To adjust your vault or putting value into it, you should use the configurator container, which has the ability to talk to it
+and set new values. Its pretty easy, just do
+
+connect into the container   
+
+    docker-compose exec config bash
+
+load credentials and server config
+    
+    source /vault/server/init_vars
+
+set a value of your desire
+    
+    vault write secret/concourse/test value=test
+    
