@@ -3,7 +3,7 @@ Before you go, please adjust the actual `docker-machine ip` in `.env`
 
     CONCOURSE_EXTERNAL_URL=
     
-If you have docker-for-mac/windows, you need to create a `iface alias` on `lo0` and use that ip here ( as i did ), or your
+If you have docker-for-mac/windows, you need to create a `iface alias` on `lo0` , [see this](https://gist.github.com/EugenMayer/a0d0d603a769aa61c8b462b176dbdba7), and use that ip here ( as i did ), or your
 worker connections wont work.
 
 This will start a concourse server right up, including vault and vault preconfigured
