@@ -3,8 +3,10 @@ fly -t lite login -c http://127.0.0.1:8080 -u concourse -p changeme || (echo "pl
 echo "inserting value"
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/main/firstvalue value=foo'
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/lower_level_secondvalue value=bar'
+docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/obj.value value=obj'
 # this one will not be readable, concourse does not support nested values.
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/nested/value value=foobar'
+
 
 # deploy the pipline
 fly sp -t lite configure -c examples/vault-based/pipeline.yml  -p main -n
