@@ -1,9 +1,14 @@
 ## start
+Before you go, please adjust the actual `docker-machine ip` in `.env`
+
+    CONCOURSE_EXTERNAL_URL=
+    
+If you have docker-for-mac/windows, you need to create a `iface alias` on `lo0` and use that ip here ( as i did ), or your
+worker connections wont work.
 
 This will start a concourse server right up, including vault and vault preconfigured
 
     docker-compose up
-    
     
 ## setup 
 

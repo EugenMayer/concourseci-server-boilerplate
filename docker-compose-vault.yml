@@ -21,7 +21,7 @@ services:
 #      - 8200:8200
     volumes:
       - vault-server-config:/vault/config
-      - vault-server-data:/var/file
+      - vault-server-data:/vault/file
     command: vault server -config /vault/config/vault.hcl
   web:
     # ensure we know where the self signed cert is
