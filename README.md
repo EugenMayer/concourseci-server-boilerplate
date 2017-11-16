@@ -70,6 +70,7 @@ since the above is all done using the server token, you can try the client token
     export VAULT_ADDR=https://vault:8200
     export VAULT_CACERT=/vault/concourse/server.crt
     
+    vault auth -method=cert
     vault read secret/concourse/main/main/myvalue
     
 ## Examples
