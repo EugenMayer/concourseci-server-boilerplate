@@ -17,8 +17,8 @@ services:
       - config
     # there should be no need to open this port to the outer world since we configure using config
     # still, of course this can be enabled if needed
-#    ports:
-#      - 8200:8200
+    #ports:
+    #  - 8200:8200
     volumes:
       - vault-server-config:/vault/config
       - vault-server-data:/vault/file
