@@ -4,6 +4,8 @@ params:
   VAULT_VALUE1:
   VAULT_VALUE2:
   VAULT_WONTWORK1:
+  VAULT_OBJ_USER:
+  VAULT_OBJ_PASSWORD:
 
 image_resource:
   type: docker-image
@@ -24,3 +26,5 @@ run:
     echo ${VAULT_VALUE1}
     echo ${VAULT_VALUE2}
     echo ${VAULT_WONTWORK1}
+    echo ${VAULT_OBJ_USER}
+    echo ${VAULT_OBJ_PASSWORD}

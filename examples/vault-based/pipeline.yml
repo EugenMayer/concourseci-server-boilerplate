@@ -11,6 +11,8 @@ jobs:
         VAULT_VALUE2: ((lower_level_secondvalue))
         # this value wont work, since concourseci does not support nested values - do not use them
         VAULT_WONTWORK1: ((nested/value))
+        VAULT_OBJ_USER: ((obj.user))
+        VAULT_OBJ_PASSWORD: ((obj.password))
         # you can also not use something like foo.bar as ket for consul
 
 resources:
