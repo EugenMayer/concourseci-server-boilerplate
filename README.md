@@ -16,7 +16,13 @@ update fly
     fly -t lite sync
     
 Adjustments can be done by editing the .env file    
-        
+
+
+## access the webui
+You can access the webui with the user concourse` and password `changeme`
+
+    http://localhost:8080
+            
 ## create a pipeline    
 
 push a pipeline to the main team / pipeline from `ci/pipline.yml`
