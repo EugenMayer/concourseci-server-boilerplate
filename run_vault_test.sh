@@ -1,5 +1,7 @@
 
 fly -t lite login -c http://172.31.31.254:8080 -u concourse -p changeme
+
+echo "inserting value"
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/main/myvalue value=foo'
 
 # deploy the pipline
