@@ -28,7 +28,6 @@ services:
     command: web --vault-ca-cert /vault/client/server.crt
     depends_on:
       - vault
-      - config
     environment:
       CONCOURSE_VAULT_URL: https://vault:8200
       CONCOURSE_VAULT_TLS_INSECURE_SKIP_VERIFY: "true"

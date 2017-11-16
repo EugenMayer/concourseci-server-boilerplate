@@ -6,13 +6,14 @@ services:
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
-    restart: 'no' # required
+    restart: unless-stopped
 
   vault:
     image: vault:0.9
     cap_add:
       - IPC_LOCK
-    ports: ["8200:8200"]
+    # we do not  want to open this port for now, since we can use the configurator to talk to vault
+    # ports: ["8200:8200"]
     volumes:
       - ./keys/vault:/vault/config
     command: vault server -config /vault/config/vault.hcl
