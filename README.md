@@ -9,7 +9,8 @@ worker connections wont work.
 This will start a concourse server right up, including vault and vault preconfigured
 
     docker-compose up
-    
+
+**Hint:** If you happen to notice, why we do use `eugenmayer/concourse-worker-solid:3.6.0` instead of `concourse/concourse` as worker, please see this [docs](https://github.com/EugenMayer/docker-image-concourseci-worker-solid)    
 ## setup 
 
 now install the cli

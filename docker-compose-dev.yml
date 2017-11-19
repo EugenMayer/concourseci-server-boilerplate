@@ -2,5 +2,6 @@ version: "2"
 
 services:
   web:
+    image: concourse/concourse:3.6.0
     ports:
       - 8080:8080
