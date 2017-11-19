@@ -68,7 +68,7 @@ volumes:
     driver: local
   concourse-keys-worker:
     driver: local
-  concourse-worker1-state:
-    driver: local
+#  concourse-worker1-state:
+#    driver: local
 
 
