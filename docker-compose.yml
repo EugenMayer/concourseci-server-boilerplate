@@ -46,7 +46,7 @@ services:
       CONCOURSE_POSTGRES_DATABASE: ${DB_NAME}
 
   # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
-  worker1:
+  worker:
     # not using concourse/concourse:3.6.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
     image: eugenmayer/concourse-worker-solid:3.6.0
     #image: concourse/concourse:3.6.0
@@ -60,6 +60,7 @@ services:
     #  - concourse-worker1-state:/worker-state
     environment:
       CONCOURSE_TSA_HOST: web
+      CONCOURSE_BAGGAGECLAIM_DRIVER: ${CONCOURSE_BAGGAGECLAIM_DRIVER}
 
 volumes:
   pgdata:
