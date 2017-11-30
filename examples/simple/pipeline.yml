@@ -1,0 +1,23 @@
+jobs:
+  - name: simple-pipeline
+    serial: true
+    build_logs_to_retain: 5
+    plan:
+    - get: eugemayer-java-image
+      params:
+        skip_download: true
+
+resources:
+  - name: eugemayer-java-image
+    type: docker-image-resource-ng
+    source:
+      repository: eugenmayer/java
+      tag: server-jre8
+
+resource_types:
+  - name:                     docker-image-resource-ng
+    type:                     docker-image
+    privileged:               true
+    source:
+      repository:             eugenmayer/concourse-docker-image-resource
+      tag:                    latest
