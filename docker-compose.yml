@@ -8,16 +8,6 @@ services:
       - concourse-keys-worker:/concourse-keys/worker
     restart: unless-stopped
 
-  vault:
-    image: vault:0.9
-    cap_add:
-      - IPC_LOCK
-    # we do not  want to open this port for now, since we can use the configurator to talk to vault
-    # ports: ["8200:8200"]
-    volumes:
-      - ./keys/vault:/vault/config
-    command: vault server -config /vault/config/vault.hcl
-
   db:
     image: postgres:10.1
     environment:
