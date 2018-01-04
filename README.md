@@ -78,6 +78,27 @@ since the above is all done using the server token, you can try the client token
     
     vault auth -method=cert
     vault read secret/concourse/main/main/myvalue
+
+## Running the standalone worker
+
+`docker-compose-worker-standalone.yml` illustrates on how to run an offsite standalone worker using ENV variables to deploy
+the private key and tsa public key.
+
+To test this locally you need to 
+
+```bash
+
+docker-composer up
+
+# now extract the /concourse-keys/worker_key from the worker container and
+# replace all newlines with an \n to make it a oneliner ( dotenv does not support multiline yet )
+# put the value into ..standalone-worker-env WORKER_EXISTING_PRIVATE_KEY
+# also extract /concourse-keys/tsa_host_key.pub (its already a one liner)
+# put the value into ..standalone-worker-env TSA_EXISTING_PUBLIC_KEY
+# adjust CONCOURSE_TSA_HOST if you have a different lo0 ip
+
+docker-compose -f docker-compose-worker-standalone.yml up
+```
     
 ## Examples
 
