@@ -81,9 +81,18 @@ since the above is all done using the server token, you can try the client token
 
 ## Running the standalone worker
 
-`docker-compose-worker-standalone.yml` illustrates on how to run an offsite standalone worker using ENV variables to deploy
-the private key and tsa public key.
+`docker-compose-worker-standalone.yml` illustrates on how to utilize `eugenmayer/concourse-worker-configurator` to run an offsite standalone worker using ENV variables to deploy
+the `worker private key` and `tsa public key`.
 
+All you basically need is setting this ENV variables in the `eugenmayer/concourse-worker-configurator` container
+
+ - TSA_EXISTING_PUBLIC_KEY = < the public key of the TSA, usually in `/concourse-keys/tsa_host_key.pub`
+ - WORKER_EXISTING_PRIVATE_KEY = the private key of an existing worker (shared key) or an key you deployed into authorized_workers on the tsa
+
+And set this on the worker itself
+
+ - CONCOURSE_TSA_HOST
+ - CONCOURSE_TSA_PORT ( should be 2222)
 To test this locally you need to 
 
 ```bash
