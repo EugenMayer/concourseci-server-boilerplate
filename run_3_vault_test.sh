@@ -1,6 +1,10 @@
-fly -t lite login -c http://127.0.0.1:8080 -u concourse -p changeme || (echo "please login yourself since http://127.0.0.1:8080 is not the right docker-machine ip for you" && exit 1)
+#!/bin/bash
 
-echo "inserting value"
+set -e
+
+flycli=~/Downloads/fly
+
+echo "inserting VAULT value"
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/main/firstvalue value=foo'
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/lower_level_secondvalue value=bar'
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/obj user=me password=mypasword'
@@ -9,8 +13,8 @@ docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault w
 
 
 # deploy the pipline
-fly sp -t lite configure -c examples/vault-based/pipeline.yml  -p main -n
+$flycli sp -t test_main configure -c examples/vault-based/pipeline.yml -p vaultpipeline -n
 # unpause the pipeline
-fly -t lite unpause-pipeline -p main
+$flycli -t test_main unpause-pipeline -p vaultpipeline
 # trigger the job and watch the logs
-fly -t lite trigger-job -j main/vault-test -w
+$flycli -t test_main trigger-job -j vaultpipeline/vault-test -w
