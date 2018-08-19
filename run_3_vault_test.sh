@@ -2,7 +2,7 @@
 
 set -e
 
-flycli=~/Downloads/fly
+flycli=fly
 
 echo "inserting VAULT value"
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/firstvalue value=foo'

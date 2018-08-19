@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-flycli=~/Downloads/fly
+flycli=fly
 
 echo "logging in into team main under target test_main"
 

@@ -4,7 +4,7 @@ set -e
 
 echo "creating team extrateam under login target test_extrateam"
 
-flycli=~/Downloads/fly
+flycli=fly
 
 # create the extra team using the main target
 $flycli -t test_main set-team --team-name=extrateam --ldap-user=included1
