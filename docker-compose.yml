@@ -2,7 +2,7 @@ version: "2"
 
 services:
   config:
-    image: eugenmayer/concourse-configurator
+    image: eugenmayer/concourse-configurator:3.x
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
