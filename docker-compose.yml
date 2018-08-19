@@ -2,7 +2,7 @@ version: "2"
 
 services:
   config:
-    image: eugenmayer/concourse-configurator
+    image: eugenmayer/concourse-configurator:4.x
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
@@ -18,7 +18,7 @@ services:
       - pgdata:/var/lib/postgresql/data
   # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
   web:
-    image: concourse/concourse:3.13.0
+    image: concourse/concourse:4.0.0
     command: web
     depends_on:
       - config
@@ -37,8 +37,8 @@ services:
 
   # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
   worker:
-    # not using concourse/concourse:3.8.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
-    image: eugenmayer/concourse-worker-solid:3.13.0
+    # not using concourse/concourse:4.0.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
+    image: eugenmayer/concourse-worker-solid:4.0.0
     privileged: true
     #hostname: worker1
     depends_on:

@@ -4,7 +4,7 @@ services:
   config_worker:
     labels:
       io.rancher.container.pull_image: always
-    image: eugenmayer/concourse-worker-configurator
+    image: eugenmayer/concourse-worker-configurator:4.x
     volumes:
       - concourse-keys-worker:/concourse-keys/worker
     env_file:
@@ -13,7 +13,7 @@ services:
   standalone-worker:
     labels:
       io.rancher.container.pull_image: always
-    image: eugenmayer/concourse-worker-solid:3.8.0
+    image: eugenmayer/concourse-worker-solid:4.0.0
     privileged: true
     depends_on:
       - config_worker
