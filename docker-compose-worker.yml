@@ -1,0 +1,18 @@
+version: "2"
+  # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
+  worker:
+    # not using concourse/concourse:4.0.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
+    image: eugenmayer/concourse-worker-solid:4.0.0
+    privileged: true
+    #hostname: worker1
+    depends_on:
+      - config
+      - web
+    volumes:
+      - concourse-keys-worker:/concourse-keys
+    #  - concourse-worker1-state:/worker-state
+    environment:
+      CONCOURSE_TSA_HOST: "web:2222"
+      CONCOURSE_TSA_PORT: 2222 # mandatory with 4.x .. default no longer applied when CONCOURSE_TSA_HOST is set
+      CONCOURSE_BAGGAGECLAIM_DRIVER: ${CONCOURSE_BAGGAGECLAIM_DRIVER}
+
