@@ -1,0 +1,45 @@
+version: "2"
+
+services:
+  ldapserver:
+    image: eugenmayer/ldapexample
+  web:
+    depends_on:
+      - ldapserver
+    environment:
+      CONCOURSE_LDAP_DISPLAY_NAME: "example ldap"
+
+      CONCOURSE_LDAP_HOST: ldapserver:389
+      CONCOURSE_LDAP_BIND_DN: cn=admin,dc=kontextwork-test,dc=de
+      CONCOURSE_LDAP_BIND_PW: kontextwork
+
+      # IMPORTANT: oddly we have to explicitly disable SSL if we enable TLS, otherwise TLS and SSL will be used at the same time
+      # which will fail
+      CONCOURSE_LDAP_INSECURE_NO_SSL: "true"
+      CONCOURSE_LDAP_START_TLS: "true"
+      # our test certificate is not valid / self signed so skip verification
+      CONCOURSE_LDAP_INSECURE_SKIP_VERIFY: "true"
+
+      CONCOURSE_LDAP_USER_SEARCH_BASE_DN: "ou=accounts,dc=kontextwork-test,dc=de"
+      CONCOURSE_LDAP_USER_SEARCH_USERNAME: cn
+      CONCOURSE_LDAP_USER_SEARCH_ID_ATTR: cn
+      CONCOURSE_LDAP_USER_SEARCH_EMAIL_ATTR: mail
+      CONCOURSE_LDAP_USER_SEARCH_NAME_ATTR: cn
+      CONCOURSE_LDAP_USER_SEARCH_SCOPE: sub # the whole subtree
+
+      CONCOURSE_LDAP_GROUP_SEARCH_DN: "ou=groups,dc=kontextwork-test,dc=de"
+      CONCOURSE_LDAP_GROUP_SEARCH_NAME_ATTR: cn
+      CONCOURSE_LDAP_GROUP_SEARCH_SCOPE: sub
+      #CONCOURSE_LDAP_GROUP_SEARCH_SCOPE: "unique_member"
+
+      # do only allow users which are in our group, so all excluded* users should not be able to login
+      # we use a group as a filter using its memberOf attribute). that is how you usually an properly have
+      # service based access in ldap, like a gorup "concourse" which grants access to concourse
+      CONCOURSE_LDAP_USER_SEARCH_FILTER: "(memberOf=cn=drupalwiki,ou=groups,dc=kontextwork-test,dc=de)"
+
+      # we want included3 not to be able to login to the main group
+      # also all excluded users should not be able to login at all since we exclude them by the group filter
+      CONCOURSE_MAIN_TEAM_LDAP_USER: included1,included2,excluded1,excluded2,excluded3
+      # defines which user can login into the main group. We only have this group
+      #CONCOURSE_MAIN_TEAM_LDAP_GROUP: drupalwiki
+

@@ -1,16 +1,19 @@
 ## start
-Before you go, please adjust the actual `docker-machine ip` in `.env`
 
-    CONCOURSE_EXTERNAL_URL=
-    
-If you have docker-for-mac/windows, you need to create a `iface alias` on `lo0` , [see this](https://gist.github.com/EugenMayer/a0d0d603a769aa61c8b462b176dbdba7), and use that ip here ( as i did ), or your
-worker connections wont work.
+A boilerplate and configuration example for you to start concourse in different setups like
+ - vault configured (as secret store), see `docker-compose-vault.yml`
+ - docker based workers `docker-compose-worker.yml`
+ - standalone workers (offsite)  `docker-compose-worker-standalone.yml`
+ - ldap auth (an example ldap server is included, see `docker-compose-ldap-auth.yml`  )
+ - local user auth `docker-compose-local-auth.yml`
 
-This will start a concourse server right up, including vault and vault preconfigured
+You can configure which aspects you want to pick by modifying `COMPOSE_FILE` in .env - you have to pick at least `ldap` or `local` for auth 
+ 
+This will start a concourse server right up, including your aspects. The default is vault and ldap auth
 
     docker-compose up
 
-**Hint:** If you happen to notice, why we do use `eugenmayer/concourse-worker-solid:3.6.0` instead of `concourse/concourse` as worker, please see this [docs](https://github.com/EugenMayer/docker-image-concourseci-worker-solid)    
+**Hint:** If you happen to notice, why we do use `eugenmayer/concourse-worker-solid:4.0.0` instead of `concourse/concourse` as worker, please see this [docs](https://github.com/EugenMayer/docker-image-concourseci-worker-solid)    
 ## setup 
 
 now install the cli
@@ -19,10 +22,10 @@ now install the cli
 
 now login with the cli against our local server
 
-    fly -t lite login -c http://172.31.31.254:8080 -u concourse -p changeme
+    fly -t lite login -c http://localhost:8080 -u concourse -p changeme
     # update fly
 
-update fly    
+update fly
     
     fly -t lite sync
     
