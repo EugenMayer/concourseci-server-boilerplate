@@ -2,7 +2,7 @@ version: "2"
 
 services:
   config:
-    image: eugenmayer/concourse-configurator:3.x
+    image: eugenmayer/concourse-configurator:4.x
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
@@ -16,41 +16,22 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
-  # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
   web:
-    image: concourse/concourse:3.13.0
+    # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
+    image: concourse/concourse:4.0.0
     command: web
     depends_on:
       - config
       - db
     volumes:
       - concourse-keys-web:/concourse-keys
-    restart: unless-stopped # required so that it retries until conocurse-db comes up
+    restart: on-failure # required so that it retries until conocurse-db comes up
     environment:
-      CONCOURSE_BASIC_AUTH_USERNAME: ${ADMIN_USER}
-      CONCOURSE_BASIC_AUTH_PASSWORD: ${ADMIN_PASSWORD}
-      CONCOURSE_EXTERNAL_URL: ${CONCOURSE_EXTERNAL_URL}
       CONCOURSE_POSTGRES_HOST: db
       CONCOURSE_POSTGRES_USER: ${DB_USER}
       CONCOURSE_POSTGRES_PASSWORD: ${DB_PASSWORD}
       CONCOURSE_POSTGRES_DATABASE: ${DB_NAME}
-
-  # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
-  worker:
-    # not using concourse/concourse:3.8.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
-    image: eugenmayer/concourse-worker-solid:3.13.0
-    privileged: true
-    #hostname: worker1
-    depends_on:
-      - config
-      - web
-    volumes:
-      - concourse-keys-worker:/concourse-keys
-    #  - concourse-worker1-state:/worker-state
-    environment:
-      CONCOURSE_TSA_HOST: web
-      CONCOURSE_BAGGAGECLAIM_DRIVER: ${CONCOURSE_BAGGAGECLAIM_DRIVER}
-
+      CONCOURSE_EXTERNAL_URL: ${EXTERNAL_URL}
 volumes:
   pgdata:
     driver: local

@@ -3,10 +3,6 @@ version: "2"
 services:
   ldapserver:
     image: eugenmayer/ldapexample
-    ports:
-      # expose this for admin access to administer the ldap server for examples .. not needed for concourse ldap access
-      # that is using the internal ldap network in our case here
-      - "389:389"
   web:
     depends_on:
       - ldapserver
