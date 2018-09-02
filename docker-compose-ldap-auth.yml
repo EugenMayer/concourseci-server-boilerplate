@@ -51,5 +51,5 @@ services:
       # defines which user can login into the main group. We only have this group
       # TODO: that does not work, neither with 'drupalwiki' or the full dn 'cn=drupalwiki,ou=groups,dc=kontextwork-test,dc=de'
       # TODO: so either the definition here does not work or the group assignment with CONCOURSE_LDAP_GROUP_SEARCH_*
-      CONCOURSE_MAIN_TEAM_LDAP_GROUP: "drupalwiki,main"
+      #CONCOURSE_MAIN_TEAM_LDAP_GROUP: "drupalwiki,main"
 

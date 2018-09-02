@@ -2,7 +2,6 @@
 
 set -e
 
-flycli=fly
 
 echo "inserting VAULT value"
 docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/firstvalue value=foo'
@@ -13,8 +12,8 @@ docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault w
 
 
 # deploy the pipline
-$flycli sp -t test_main configure -c examples/vault-based/pipeline.yml -p vaultpipeline -n
+fly sp -t test_main configure -c examples/vault-based/pipeline.yml -p vaultpipeline -n
 # unpause the pipeline
-$flycli -t test_main unpause-pipeline -p vaultpipeline
+fly -t test_main unpause-pipeline -p vaultpipeline
 # trigger the job and watch the logs
-$flycli -t test_main trigger-job -j vaultpipeline/vault-test -w
+fly -t test_main trigger-job -j vaultpipeline/vault-test -w
