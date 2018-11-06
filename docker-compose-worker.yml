@@ -3,8 +3,8 @@ version: "2"
 services:
   # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
   worker:
-    # not using concourse/concourse:4.1.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
-    image: eugenmayer/concourse-worker-solid:4.1.0
+    # not using concourse/concourse:4.2.0 du to https://github.com/EugenMayer/docker-image-concourseci-worker-solid
+    image: eugenmayer/concourse-worker-solid:4.2.1
     privileged: true
     depends_on:
       - config
