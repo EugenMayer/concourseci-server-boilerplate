@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  minio:
+    image: minio/minio
+    volumes:
+    - minio-data:/data
+    - minio-config:/root/.minio
+    ports:
+    - "9001:9000"
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    command: server /data
+
+volumes:
+  minio-data:
+    driver: local
+  minio-config:
+    driver: local
