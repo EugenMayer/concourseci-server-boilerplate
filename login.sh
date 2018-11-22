@@ -1,3 +1,3 @@
 #!/bin/bash
 
-fly -t lite login -c http://localhost:8080 -u concourse -p changeme
+fly -t lite login -c http://127.0.0.1:8080

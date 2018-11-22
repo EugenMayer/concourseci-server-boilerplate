@@ -14,6 +14,7 @@ This will start a concourse server right up, including your aspects. The default
     docker-compose up
 
 **Hint:** If you happen to notice, why we do use `eugenmayer/concourse-worker-solid:4.0.0` instead of `concourse/concourse` as worker, please see this [docs](https://github.com/EugenMayer/docker-image-concourseci-worker-solid)    
+
 ## setup 
 
 now install the cli
@@ -22,8 +23,9 @@ now install the cli
 
 now login with the cli against our local server
 
-    fly -t lite login -c http://localhost:8080 -u concourse -p changeme
-    # update fly
+    # you should not use 'localhost' since this created redirect issues right now
+    fly -t lite login -c http://127.0.0.1:8080
+    # see "Login/Credentials" for the login information   
 
 update fly
     
@@ -31,11 +33,21 @@ update fly
     
 Adjustments can be done by editing the .env file    
 
+## Login / Credentials
 
-## access the webui
-You can access the webui with the user concourse` and password `changeme`
+the credentials for the first login depend on the auth type you have chose. Right now **Ldap** is the **default**
 
-    http://localhost:8080
+**Ldap**
+When using the LDAP, potential users are listed here: https://github.com/EugenMayer/docker-image-ldapexample
+- user: included1 / password: included1
+
+**Local**
+- user:admin / password: admin
+    
+## access the WebUI
+see "Login/Credentials" for the login information   
+
+    http://127.0.0.1:8080
             
 ## create a pipeline    
 
