@@ -24,12 +24,12 @@ now install the cli
 now login with the cli against our local server
 
     # you should not use 'localhost' since this created redirect issues right now
-    fly -t lite login -c http://127.0.0.1:8080
+    fly -t test_main login -c http://127.0.0.1:8080
     # see "Login/Credentials" for the login information   
 
 update fly
     
-    fly -t lite sync
+    fly -t test_main sync
     
 Adjustments can be done by editing the .env file    
 
@@ -53,15 +53,15 @@ see "Login/Credentials" for the login information
 
 push a pipeline to the main team / pipeline from `ci/pipline.yml`
 
-    fly sp -t lite configure -c ci/pipline.yml -p main --load-vars-from ../credentials.yml -n   
+    fly sp -t test_main configure -c ci/pipline.yml -p main --load-vars-from ../credentials.yml -n   
     
 ## intercept into a broken / running container
 
-    fly -t lite intercept -j <pipelinename>/<jobname>
+    fly -t test_main intercept -j <pipelinename>/<jobname>
     
 so for example, assuming we have a job in pipeline `main` named `builder-image-build`
 
-    fly -t lite intercept -j main/builder-image-build
+    fly -t test_main intercept -j main/builder-image-build
      
 ## vault access and setting values
 
