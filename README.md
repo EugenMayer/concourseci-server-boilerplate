@@ -80,7 +80,24 @@ load credentials and server config
 set a value of your desire
     
     vault write secret/concourse/test value=test
-    
+
+## Minio s3 based storage
+
+Having a proper artifact storage is basically a mandatory point with concourse, maybe one of the key differences to other CI soloutions.
+You can dodge it until you fail hard and then you will need one. That is why minio is included in this stack to provide an out of the box
+s3 storage - locally. Without the hassle of s3 keys or similar.
+
+**Be aware, Minio does not support object versioning, you will not be able to use `versioned_file: myapp.tgz` but only `regexp`**
+
+To login, connect to 
+
+- http://localhost:9001
+- user: minio
+- password: changme
+
+You will need to create at leas one bucket to use it, obviously. 
+See https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example for an example on how to use Minio
+but basically its just the same as you would use AWS s3 - it's a "immitation"
 ### testing client access
 
 since the above is all done using the server token, you can try the client token too
