@@ -1,6 +1,30 @@
-## start
+## WAT
 
-A boilerplate and configuration example for you to start concourse in different setups like
+A boilerplate for you to quick-start a concourse stack with most of the features you would need in production.
+It auto-configures `Concourse CI` and lets you configure most of the things using ENV variables for customization.
+
+ - [Vault](https://www.vaultproject.io/) (Secret Storage)
+ - [Minio](https://minio.io/) (S3 Artifact Storage)
+ - [LDAP](https://github.com/EugenMayer/docker-image-ldapexample) (Authentication)
+
+It starts the whole stack with a simple
+
+```console
+docker-compose up
+```
+
+and lets you select the features you actually need in `.env`.
+
+Use cases would be: 
+
+- Test concourse for or in your team
+- test-drive upgrades of your concourse
+- developing new pipelines before you deploy it to your production server, like this [concourse-app-release-lifecycle-example](https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example)
+ 
+## Start
+
+I. First you have to choose which features you want or keep the default which is `vault+ldap+minio`
+
  - `vault` configured (as secret store), see `docker-compose-vault.yml`
  - `minio` configured (as a s3 alike artifac storage store), see `docker-compose-minio.yml`
  - docker based workers `docker-compose-worker.yml`
@@ -8,17 +32,19 @@ A boilerplate and configuration example for you to start concourse in different 
  - `ldap` auth (an example ldap server is included, see `docker-compose-ldap-auth.yml`  )
  - local user auth `docker-compose-local-auth.yml`
 
-You can configure which aspects you want to pick by modifying `COMPOSE_FILE` in .env - you have to pick at least `ldap` or `local` for auth 
+You can configure which aspects you want to pick by modifying `COMPOSE_FILE` in .env.
+
+II. For the authentication, you have to pick at least `ldap` or `local` for auth 
  
-This will start a concourse server right up, including your aspects. The default is vault and ldap auth
+II. This will start a concourse server right up, including your aspects. The default is vault and ldap auth
 
     docker-compose up
 
 **Hint:** If you happen to notice, why we do use `eugenmayer/concourse-worker-solid:4.0.0` instead of `concourse/concourse` as worker, please see this [docs](https://github.com/EugenMayer/docker-image-concourseci-worker-solid)    
 
-## setup 
+## Configuration 
 
-now install the cli
+Now install the cli
 
     brew cask install fly
 
@@ -34,7 +60,7 @@ update fly
     
 Adjustments can be done by editing the .env file    
 
-## Login / Credentials
+### Login / Credentials
 
 the credentials for the first login depend on the auth type you have chose. Right now **Ldap** is the **default**
 
@@ -45,18 +71,39 @@ When using the LDAP, potential users are listed here: https://github.com/EugenMa
 **Local**
 - user:admin / password: admin
     
-## access the WebUI
-see "Login/Credentials" for the login information   
+### Access the WebUI
+See "Login/Credentials" section for the login information, access the GUI :   
 
     http://127.0.0.1:8080
             
-## create a pipeline    
+### Create/Deploy a pipeline    
 
 push a pipeline to the main team / pipeline from `ci/pipline.yml`
 
     fly sp -t test_main configure -c ci/pipline.yml -p main --load-vars-from ../credentials.yml -n   
+
+## Minio s3 based storage
+
+Having a proper artifact storage is basically a mandatory point with concourse-ci, maybe one of the key differences to other CI solutions
+and for sure can be seen as a burden when you start concourse.
+You can dodge it but you will regret it since concourse is stubborn in this regard - it will force it.
+That is why Minio is included in this stack to provide an out of the box
+s3 storage - locally. Without the hassle of s3 keys or similar.
+
+**Be aware, Minio does not support object versioning, you will not be able to use `versioned_file: myapp.tgz` but only `regexp`**
+
+To login, connect to 
+
+- http://localhost:9001
+- user: minio
+- password: changme
+
+You will need to create at leas one bucket to use it, obviously. 
+See https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example for an example on how to use Minio
+but basically its just the same as you would use AWS s3 - it's a "immitation"
+
     
-## intercept into a broken / running container
+## Intercept into a broken / running container
 
     fly -t test_main intercept -j <pipelinename>/<jobname>
     
@@ -64,7 +111,7 @@ so for example, assuming we have a job in pipeline `main` named `builder-image-b
 
     fly -t test_main intercept -j main/builder-image-build
      
-## vault access and setting values
+### Vault access and setting values
 
 To adjust your vault or putting value into it, you should use the configurator container, which has the ability to talk to it
 and set new values. Its pretty easy, just do
@@ -81,24 +128,10 @@ set a value of your desire
     
     vault write secret/concourse/test value=test
 
-## Minio s3 based storage
 
-Having a proper artifact storage is basically a mandatory point with concourse, maybe one of the key differences to other CI soloutions.
-You can dodge it until you fail hard and then you will need one. That is why minio is included in this stack to provide an out of the box
-s3 storage - locally. Without the hassle of s3 keys or similar.
+## Advanced
 
-**Be aware, Minio does not support object versioning, you will not be able to use `versioned_file: myapp.tgz` but only `regexp`**
-
-To login, connect to 
-
-- http://localhost:9001
-- user: minio
-- password: changme
-
-You will need to create at leas one bucket to use it, obviously. 
-See https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example for an example on how to use Minio
-but basically its just the same as you would use AWS s3 - it's a "immitation"
-### testing client access
+### Vault: Testing client access
 
 since the above is all done using the server token, you can try the client token too
 
@@ -112,7 +145,7 @@ since the above is all done using the server token, you can try the client token
     vault auth -method=cert
     vault read secret/concourse/main/main/myvalue
 
-## Running the standalone worker
+### Running the standalone worker
 
 `docker-compose-worker-standalone.yml` illustrates on how to utilize `eugenmayer/concourse-worker-configurator` to run an offsite standalone worker using ENV variables to deploy
 the `worker private key` and `tsa public key`.
@@ -144,7 +177,7 @@ docker-compose -f docker-compose-worker-standalone.yml up
     
 ## Examples
 
-### vault
+### Vault
 
 start the stack and login
 
