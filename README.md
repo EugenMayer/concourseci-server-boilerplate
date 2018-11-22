@@ -1,5 +1,11 @@
 ## WAT
 
+
+![Concourse](concourse.png | width=100 )
+![Vault](vault.png | width=100 )
+![Minio](minio.png | width=100 )
+![OpenLdap](openldap.png | width=100 )
+
 A boilerplate for you to quick-start a concourse stack with most of the features you would need in production.
 It auto-configures `Concourse CI` and lets you configure most of the things using ENV variables for customization.
 
