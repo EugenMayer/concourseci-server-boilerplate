@@ -1,10 +1,11 @@
 ## start
 
 A boilerplate and configuration example for you to start concourse in different setups like
- - vault configured (as secret store), see `docker-compose-vault.yml`
+ - `vault` configured (as secret store), see `docker-compose-vault.yml`
+ - `minio` configured (as a s3 alike artifac storage store), see `docker-compose-minio.yml`
  - docker based workers `docker-compose-worker.yml`
  - standalone workers (offsite)  `docker-compose-worker-standalone.yml`
- - ldap auth (an example ldap server is included, see `docker-compose-ldap-auth.yml`  )
+ - `ldap` auth (an example ldap server is included, see `docker-compose-ldap-auth.yml`  )
  - local user auth `docker-compose-local-auth.yml`
 
 You can configure which aspects you want to pick by modifying `COMPOSE_FILE` in .env - you have to pick at least `ldap` or `local` for auth 
