@@ -18,7 +18,7 @@ services:
       - pgdata:/var/lib/postgresql/data
   web:
     # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
-    image: concourse/concourse:4.2.1
+    image: concourse/concourse:4.2.3
     command: web
     depends_on:
       - config
