@@ -1,6 +1,5 @@
 ## WAT
 
-
 <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/concourse.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/vault.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/minio.jpg" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/openldap.png" height="100">
 
 A boilerplate for you to quick-start a concourse stack with most of the features you would need in production.
@@ -23,6 +22,10 @@ Use cases would be:
 - Test concourse for or in your team
 - test-drive upgrades of your concourse
 - developing new pipelines before you deploy it to your production server, like this [concourse-app-release-lifecycle-example](https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example)
+
+## Upgrade from 4.x
+
+-  it seems like fly 4.x cannot upgrade itself since it fails to authenticate against 5.x, so download it manualy using `curl -o fly http://127.0.0.1:8080/api/v1/cli?arch=amd64&platform=darwin` and replace your binary in `/usrl/local/bin/fly`
  
 ## Start
 

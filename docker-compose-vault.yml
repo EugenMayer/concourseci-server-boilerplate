@@ -10,6 +10,7 @@ services:
       - vault-client-config:/vault/concourse
   vault:
     restart: unless-stopped # required so that it retries until conocurse-db comes up
+    # image: vault:1.0.3
     image: vault:0.11.0
     cap_add:
       - IPC_LOCK
