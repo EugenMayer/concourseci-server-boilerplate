@@ -13,7 +13,7 @@ services:
   standalone-worker:
     labels:
       io.rancher.container.pull_image: always
-    image: eugenmayer/concourse-worker-solid:4.0.0
+    image: concourse/concourse
     privileged: true
     depends_on:
       - config_worker
@@ -21,12 +21,7 @@ services:
       - concourse-keys-worker:/concourse-keys
     env_file:
       - .standalone-worker-env
-    # we need --tsa-worker-private-key=/concourse-keys/worker_key --tsa-public-key=/concourse-keys/tsa_host_key.pub
-    # since the ENV variables seem to be buggy and not functional in this case. Those 2 are set in our worker during the startup
-    # CONCOURSE_TSA_PUBLIC_KEY=/concourse-keys/tsa_host_key.pub
-    # CONCOURSE_TSA_WORKER_PRIVATE_KEY=/concourse-keys/worker_key
-    # but we get a handshake error, so the private key path seems to not get picked up by the env variable here
-    command: retire-worker --tsa-worker-private-key=/concourse-keys/worker_key --tsa-public-key=/concourse-keys/tsa_host_key.pub
+    command: worker --tsa-worker-private-key=/concourse-keys/worker_key --tsa-public-key=/concourse-keys/tsa_host_key.pub
 
 volumes:
   concourse-keys-worker:

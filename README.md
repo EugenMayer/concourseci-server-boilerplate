@@ -43,8 +43,6 @@ II. This will start a concourse server right up, including your aspects. The def
 
     docker-compose up
 
-**Hint:** If you happen to notice, why we do use `eugenmayer/concourse-worker-solid:4.0.0` instead of `concourse/concourse` as worker, please see this [docs](https://github.com/EugenMayer/docker-image-concourseci-worker-solid)    
-
 ## Configuration 
 
 Now install the cli
