@@ -1,3 +1,11 @@
+# Status
+
+- Concourse Version: 5.x
+- Vault: 1.0.x
+- Postgres: 10.7
+- Auth: LDAP or Local
+- Artifact-Storage: Minio S3 local storage
+
 ## WAT
 
 <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/concourse.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/vault.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/minio.jpg" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/openldap.png" height="100">
