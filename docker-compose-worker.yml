@@ -11,9 +11,12 @@ services:
       - web
     volumes:
       - concourse-keys-worker:/concourse-keys
-    #  - concourse-worker1-state:/worker-state
+      - concourse-worker1-state:/worker-state
     environment:
       # port is mandatory with 4.x .. port syntax required
       CONCOURSE_TSA_HOST: "web:2222"
       CONCOURSE_BAGGAGECLAIM_DRIVER: ${CONCOURSE_BAGGAGECLAIM_DRIVER}
 
+volumes:
+  concourse-worker1-state:
+    driver: local

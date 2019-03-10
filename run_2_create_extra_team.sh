@@ -5,13 +5,12 @@ set -e
 echo "creating team extrateam under login target test_extrateam"
 
 # create the extra team using the main target
-fly -t test_main set-team --team-name=extrateam --ldap-user=included1
+yes |  fly -t test_main set-team --team-name=extrateam --ldap-user=included1
 
-# we have to logout prio otherwise if we logged into the testserver back in time the login process below will succeed
-# but it will actually not work.. just another bug in conccourse
-fly -t test_extrateam logout || true
+# we have to logout from the test_main target out of any reason, before we can properly login into test_extrateam
+# fly -t test_main logout || true
 # create a login for the new team
-fly -t test_extrateam login -c http://127.0.0.1:8080 -b --team-name=extrateam || (echo "please login yourself since http://127.0.0.1:8080 is not the right docker-machine ip for you" && exit 1)
+fly -t test_extrateam status > /dev/null 2>&1  || fly -t test_extrateam login -c http://127.0.0.1:8080 -b --team-name=extrateam || (echo "please login yourself since http://127.0.0.1:8080 is not the right docker-machine ip for you" && exit 1)
 
 
 # deploy the pipline

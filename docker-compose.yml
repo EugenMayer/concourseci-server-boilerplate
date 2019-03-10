@@ -2,14 +2,14 @@ version: "2"
 
 services:
   config:
-    image: eugenmayer/concourse-configurator:4.x
+    image: eugenmayer/concourse-configurator:5.x
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
     restart: unless-stopped
 
   db:
-    image: postgres:10.1
+    image: postgres:10.7
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}

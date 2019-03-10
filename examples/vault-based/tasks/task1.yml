@@ -3,7 +3,6 @@ platform: linux
 params:
   VAULT_VALUE1:
   VAULT_VALUE2:
-  VAULT_WONTWORK1:
   VAULT_OBJ_USER:
   VAULT_OBJ_PASSWORD:
 
@@ -25,6 +24,5 @@ run:
   - |
     echo ${VAULT_VALUE1}
     echo ${VAULT_VALUE2}
-    echo ${VAULT_WONTWORK1}
     echo ${VAULT_OBJ_USER}
     echo ${VAULT_OBJ_PASSWORD}

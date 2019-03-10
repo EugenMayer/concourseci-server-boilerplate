@@ -29,7 +29,7 @@ services:
       CONCOURSE_LDAP_USER_SEARCH_NAME_ATTR: cn
       CONCOURSE_LDAP_USER_SEARCH_SCOPE: sub # the whole subtree
 
-      CONCOURSE_LDAP_GROUP_SEARCH_DN: "ou=groups,dc=kontextwork-test,dc=de"
+      CONCOURSE_LDAP_GROUP_SEARCH_BASE_DN: "ou=groups,dc=kontextwork-test,dc=de"
       CONCOURSE_LDAP_GROUP_SEARCH_NAME_ATTR: cn
       CONCOURSE_LDAP_GROUP_SEARCH_SCOPE: sub
       # Adds an additional requirement to the filter that an attribute in the group match the user's attribute value. The exact filter being added is: (<groupAttr>=<userAttr value>)
@@ -42,7 +42,7 @@ services:
       CONCOURSE_LDAP_USER_SEARCH_FILTER: "(memberOf=cn=drupalwiki,ou=groups,dc=kontextwork-test,dc=de)"
 
       # TODO: in our test we usually want to use either CONCOURSE_MAIN_TEAM_LDAP_USER or CONCOURSE_MAIN_TEAM_LDAP_GROUP but..
-      # TODO: .. CONCOURSE_MAIN_TEAM_LDAP_GROUP is not working right now. Maybe that's a bug or defintion issue, hard to know without docs
+      # TODO: .... CONCOURSE_MAIN_TEAM_LDAP_GROUP is not working right now. Maybe that's a bug or defintion issue, hard to know without docs
       # ..
       # we want included3 not to be able to login to the main group
       # also all excluded users should not be able to login at all since we exclude them by the group filter
