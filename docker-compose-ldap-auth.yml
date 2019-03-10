@@ -9,6 +9,7 @@ services:
     depends_on:
       - ldapserver
     environment:
+      # see the docs nowdays at https://concourse-ci.org/ldap-auth.html
       CONCOURSE_LDAP_DISPLAY_NAME: "example ldap"
 
       CONCOURSE_LDAP_HOST: ldapserver:389

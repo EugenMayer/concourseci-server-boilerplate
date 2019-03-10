@@ -72,8 +72,12 @@ the credentials for the first login depend on the auth type you have chose. Righ
 When using the LDAP, potential users are listed here: https://github.com/EugenMayer/docker-image-ldapexample
 - user: included1 / password: included1
 
+See the [Concourse LDAP AUTH docs](https://concourse-ci.org/ldap-auth.html) if you want to lear more
+
 **Local**
 - user:admin / password: admin
+
+See the [Concourse Local AUTH docs](https://concourse-ci.org/local-auth.html) if you want to learn more
     
 ### Access the WebUI
 See "Login/Credentials" section for the login information, access the GUI :   
