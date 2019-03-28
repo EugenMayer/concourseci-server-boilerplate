@@ -13,7 +13,7 @@ services:
   standalone-worker:
     labels:
       io.rancher.container.pull_image: always
-    image: concourse/concourse
+    image: concourse/concourse:5.0.1
     privileged: true
     depends_on:
       - config_worker
