@@ -15,6 +15,7 @@ services:
       io.rancher.container.pull_image: always
     image: concourse/concourse:5.4.0
     privileged: true
+    stop_signal: SIGUSR2
     depends_on:
       - config_worker
     volumes:

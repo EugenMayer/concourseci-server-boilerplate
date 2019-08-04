@@ -6,6 +6,7 @@ services:
     image: concourse/concourse:5.4.0
     command: worker
     privileged: true
+    stop_signal: SIGUSR2
     depends_on:
       - config
       - web

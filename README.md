@@ -2,7 +2,7 @@
 
 - Concourse Version: 5.x
 - Vault: 1.2.x
-- Postgres: 10.7
+- Postgres: 11
 - Auth: LDAP or Local
 - Artifact-Storage: Minio S3 local storage
 
@@ -157,8 +157,11 @@ load credentials and server config
 
 set a value of your desire
     
-    vault write secret/concourse/test value=test
+    vault kv put secret/concourse/test value=test
 
+or in short
+
+    docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault kv put secret/concourse/main/firstvalue value=foo'
 
 ## Advanced
 
@@ -173,8 +176,8 @@ since the above is all done using the server token, you can try the client token
     export VAULT_ADDR=https://vault:8200
     export VAULT_CACERT=/vault/concourse/server.crt
     
-    vault auth -method=cert
-    vault read secret/concourse/main/main/myvalue
+    vault login -method=cert
+    vault kv get secret/concourse/main/main/myvalue
 
 ### Running the standalone worker
 
@@ -210,22 +213,5 @@ docker-compose -f docker-compose-worker-standalone.yml up
 
 ### Vault
 
-start the stack and login
-
-    docker-compose up
-    fly -t lite login -c http://172.31.31.254:8080 -u concourse -p changeme
-
-create our test-value in the vault    
-
-    docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/main/myvalue value=foo'
-
-add the pipeline to our concourse
-    
-    # deploy the pipline
-    fly sp -t lite configure -c examples/vault-based/pipeline.yml  -p main -n
-    # unpause the pipeline    
-    fly -t lite unpause-pipeline -p main
-    # trigger the job and watch the logs
-    fly -t lite trigger-job -j main/test-vault -w
-    
-You should see a echo foo` in the logs    
+See the `run_3_vault_test.sh` script to see how consul con be setup and started with a vault based pipeline 
+`example/vaults-based`
