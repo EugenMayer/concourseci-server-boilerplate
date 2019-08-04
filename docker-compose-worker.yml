@@ -3,7 +3,7 @@ version: "2"
 services:
   # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
   worker:
-    image: concourse/concourse:5.2.0
+    image: concourse/concourse:5.4.0
     command: worker
     privileged: true
     depends_on:

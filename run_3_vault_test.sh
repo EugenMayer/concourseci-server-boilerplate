@@ -4,9 +4,11 @@ set -e
 
 
 echo "inserting VAULT value"
-docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/firstvalue value=foo'
-docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/lower_level_secondvalue value=bar'
-docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault write secret/concourse/main/obj user=me password=mypasword'
+docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault kv put secret/concourse/main/firstvalue
+value=foo'
+docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault kv put secret/concourse/main/lower_level_secondvalue value=bar'
+docker-compose exec config bash -l -c 'source /vault/server/init_vars && vault kv put secret/concourse/main/obj user=me
+password=mypasword'
 
 
 # deploy the pipeline

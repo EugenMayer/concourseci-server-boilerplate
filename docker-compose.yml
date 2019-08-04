@@ -7,7 +7,6 @@ services:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
     restart: unless-stopped
-
   db:
     image: postgres:10.7
     environment:
@@ -18,7 +17,7 @@ services:
       - pgdata:/var/lib/postgresql/data
   web:
     # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
-    image: concourse/concourse:5.2.0
+    image: concourse/concourse:5.4.0
     command: web
     depends_on:
       - config

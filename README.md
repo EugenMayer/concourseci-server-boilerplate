@@ -1,7 +1,7 @@
 # Status
 
 - Concourse Version: 5.x
-- Vault: 1.0.x
+- Vault: 1.2.x
 - Postgres: 10.7
 - Auth: LDAP or Local
 - Artifact-Storage: Minio S3 local storage
