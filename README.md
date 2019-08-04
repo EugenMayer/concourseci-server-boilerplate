@@ -33,7 +33,11 @@ Use cases would be:
 
 ## Upgrade from 4.x
 
--  it seems like fly 4.x cannot upgrade itself since it fails to authenticate against 5.x, so download it manualy using `curl -o fly http://127.0.0.1:8080/api/v1/cli?arch=amd64&platform=darwin` and replace your binary in `/usrl/local/bin/fly`
+-  it seems like fly 4.x cannot upgrade itself since it fails to authenticate against 5.x, so download it manually using
+ - MacOS: `curl -o fly http://localhost:8080/api/v1/cli?arch=amd64&platform=darwin`
+ - Linux: `curl -o fly http://localhost:8080/api/v1/cli?arch=amd64&platform=linux` 
+
+and replace your binary in e.g. `/usrl/local/bin/fly`
  
 ## Start
 
@@ -58,12 +62,23 @@ II. This will start a concourse server right up, including your aspects. The def
 
 Now install the cli
 
+    # MacOS
     brew cask install fly
+    
+    # linux, e.g. arch AUR
+    yay -S concourse-fly-bin
+    
+    # or download from the running concourse server
+    
+    # MacOS
+    curl -o fly http://localhost:8080/api/v1/cli?arch=amd64&platform=darwin
+
+    # or Linux
+    curl -o fly http://localhost:8080/api/v1/cli?arch=amd64&platform=linux    
 
 now login with the cli against our local server
 
-    # you should not use 'localhost' since this created redirect issues right now
-    fly -t test_main login -c http://127.0.0.1:8080
+    fly -t test_main login -c http://localhost:8080
     # see "Login/Credentials" for the login information   
 
 update fly
