@@ -1,9 +1,9 @@
-version: "2"
+version: '3'
 
 services:
   web:
     environment:
       # the password should be bcrypt encoded in production, do not use plaintext .. obviously
       # seems like both is supported though, so for testing/docs we use plaintext
-      CONCOURSE_ADD_LOCAL_USER: "admin:admin"
-      CONCOURSE_MAIN_TEAM_LOCAL_USER: "admin"
+      CONCOURSE_ADD_LOCAL_USER: 'admin:admin'
+      CONCOURSE_MAIN_TEAM_LOCAL_USER: 'admin'

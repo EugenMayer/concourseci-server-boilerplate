@@ -1,8 +1,8 @@
-version: "2"
+version: '3'
 
 services:
   config:
-    image: eugenmayer/concourse-configurator:5.x
+    image: ghcr.io/eugenmayer/concourse-configurator:7.x
     volumes:
       - concourse-keys-web:/concourse-keys/web
       - concourse-keys-worker:/concourse-keys/worker
@@ -17,7 +17,7 @@ services:
       - pgdata:/var/lib/postgresql/data
   web:
     # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
-    image: concourse/concourse:5.5.1
+    image: concourse/concourse:${CONCOURSE_VERSION}
     command: web
     depends_on:
       - config
@@ -26,11 +26,13 @@ services:
       - concourse-keys-web:/concourse-keys
     restart: on-failure # required so that it retries until conocurse-db comes up
     environment:
+      CONCOURSE_LOG_LEVEL: ${CONCOURSE_LOG_LEVEL:-error}
       CONCOURSE_POSTGRES_HOST: db
       CONCOURSE_POSTGRES_USER: ${DB_USER}
       CONCOURSE_POSTGRES_PASSWORD: ${DB_PASSWORD}
       CONCOURSE_POSTGRES_DATABASE: ${DB_NAME}
       CONCOURSE_EXTERNAL_URL: ${EXTERNAL_URL}
+      CONCOURSE_ENABLE_LIDAR: 'false'
 volumes:
   pgdata:
     driver: local
@@ -40,5 +42,4 @@ volumes:
     driver: local
 #  concourse-worker1-state:
 #    driver: local
-
 

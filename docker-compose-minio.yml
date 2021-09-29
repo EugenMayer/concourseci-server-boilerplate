@@ -1,13 +1,13 @@
-version: "2"
+version: '3'
 
 services:
   minio:
     image: minio/minio
     volumes:
-    - minio-data:/data
-    - minio-config:/root/.minio
+      - minio-data:/data
+      - minio-config:/root/.minio
     ports:
-    - "9001:9000"
+      - '9001:9000'
     environment:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
