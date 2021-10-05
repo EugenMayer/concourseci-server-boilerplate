@@ -39,14 +39,17 @@ Use cases would be:
 To just go for it:
 
 ```
-docker-compose up
+docker-compose --env-file .env.local.sample up
 ```
 
 Now you have the default setup. Access it using `http://127.0.0.1:8080` with the user `included1`, password `included`
 
 ## Customizing
 
+Copy the `.env.local.sample` to `.env` - now customize `.env`.
+
 I. The default setup includes the following aspects
+
 - `traefik` SSL offloading / reverse proxy (with disabled SSL by default)
 - `vault` configured (as secret store), see `docker-compose-vault.yml`
 - `minio` configured (as a s3 alike artifac storage store), see `docker-compose-minio.yml`
