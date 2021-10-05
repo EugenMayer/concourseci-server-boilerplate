@@ -19,6 +19,7 @@ services:
       TRAEFIK_ACME_CHALLENGE: 'http'
       TRAEFIK_HTTPS_ENABLE: 'only'
       TRAEFIK_DOCKER_ENABLE: 'true'
+      TRAEFIK_DOCKER_EXPOSEDBYDEFAULT: 'false'
     volumes:
       - certs:/mnt/certs
       - filestorage:/mnt/filestorage
