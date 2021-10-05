@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    labels:
+      traefik.http.routers.web.tls: 'false'
+  traefik:
+    environment:
+      TRAEFIK_ACME_ENABLE: 'false'
+      TRAEFIK_HTTPS_ENABLE: 'false'
+      # use the staging server
+      # TRAEFIK_ACME_CASERVER: 'https://acme-staging-v02.api.letsencrypt.org/directory'
