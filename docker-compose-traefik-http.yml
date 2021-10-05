@@ -7,6 +7,7 @@ services:
       traefik.http.routers.web.rule: 'Host(`${WEB_DOMAIN}`)'
       traefik.http.routers.web.tls: 'true'
       traefik.http.routers.web.tls.certresolver: 'default'
+      traefik.enable: 'true'
   # see https://github.com/EugenMayer/docker-image-traefik
   traefik:
     image: eugenmayer/traefik:2.x
