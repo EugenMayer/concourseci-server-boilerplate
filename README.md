@@ -5,6 +5,7 @@
 - Postgres: 11
 - Auth: LDAP or Local
 - Artifact-Storage: Minio S3 local storage
+- Traefik as SSL-Offloader: 2.5+
 
 ## WAT
 
@@ -17,6 +18,7 @@ It auto-configures `Concourse CI` and lets you configure most of the things usin
 - [Vault](https://www.vaultproject.io/) (Secret Storage)
 - [Minio](https://minio.io/) (S3 Artifact Storage)
 - [LDAP](https://github.com/EugenMayer/docker-image-ldapexample) (Authentication)
+- [Traefik](https://traefik.io/) (SSL Offloading)
 
 It starts the whole stack with a simple
 
@@ -45,7 +47,7 @@ Now you have the default setup. Access it using `http://127.0.0.1:8080` with the
 ## Customizing
 
 I. The default setup includes the following aspects
-
+- `traefik` SSL offloading / reverse proxy (with disabled SSL by default)
 - `vault` configured (as secret store), see `docker-compose-vault.yml`
 - `minio` configured (as a s3 alike artifac storage store), see `docker-compose-minio.yml`
 - docker based workers `docker-compose-worker.yml`
