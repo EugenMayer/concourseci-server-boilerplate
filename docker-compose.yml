@@ -22,6 +22,8 @@ services:
     depends_on:
       - config
       - db
+    ports:
+      - 2222:2222
     volumes:
       - concourse-keys-web:/concourse-keys
     restart: on-failure # required so that it retries until conocurse-db comes up
