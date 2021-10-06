@@ -138,7 +138,7 @@ To login, connect to
 
 - http://localhost:9001
 - user: minio
-- password: changme
+- password: changeme
 
 You will need to create at leas one bucket to use it, obviously.
 See https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example for an example on how to use Minio
