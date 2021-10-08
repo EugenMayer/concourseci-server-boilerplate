@@ -28,7 +28,10 @@ services:
       - concourse-keys-web:/concourse-keys
     restart: on-failure # required so that it retries until conocurse-db comes up
     environment:
-      CONCOURSE_LOG_LEVEL: ${CONCOURSE_LOG_LEVEL:-error}
+      CONCOURSE_LOG_LEVEL: ${LOG_LEVEL:-error}
+      CONCOURSE_TSA_LOG_LEVEL: ${LOG_LEVEL:-error}
+      CONCOURSE_BAGGAGECLAIM_LOG_LEVEL: ${LOG_LEVEL:-error}
+      CONCOURSE_GARDEN_LOG_LEVEL: ${LOG_LEVEL:-error}
       CONCOURSE_POSTGRES_HOST: db
       CONCOURSE_POSTGRES_USER: ${DB_USER}
       CONCOURSE_POSTGRES_PASSWORD: ${DB_PASSWORD}
