@@ -1,23 +1,23 @@
 jobs:
   - name: simple-pipeline
     serial: true
-    build_logs_to_retain: 5
+    build_log_retention:
+      builds: 5
     plan:
-    - get: eugemayer-java-image
-      params:
-        skip_download: true
+      - get: eugemayer-traefik-git
+      - get: eugemayer-traefik
+        params:
+          skip_download: true
 
 resources:
-  - name: eugemayer-java-image
-    type: docker-image-resource-ng
+  - name: eugemayer-traefik
+    type: docker-image
     source:
-      repository: eugenmayer/java
-      tag: server-jre8
+      repository: eugenmayer/traefik
+      tag: 2.x
 
-resource_types:
-  - name:                     docker-image-resource-ng
-    type:                     docker-image
-    privileged:               true
+  - name: eugemayer-traefik-git
+    type: git
     source:
-      repository:             eugenmayer/concourse-docker-image-resource
-      tag:                    latest
+      uri: https://github.com/EugenMayer/docker-image-traefik.git
+      branch: master

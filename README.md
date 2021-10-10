@@ -1,7 +1,7 @@
 # Status
 
 - Concourse Version: 7.x
-- Vault: 1.2.x
+- Vault: 1.8.x
 - Postgres: 11
 - Auth: LDAP or Local
 - Artifact-Storage: Minio S3 local storage
@@ -9,7 +9,7 @@
 
 ## WAT
 
-<img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/concourse.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/vault.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/minio.jpg" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/openldap.png" height="100">
+<img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/assets/concourse.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/assets/vault.png" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/assets/minio.jpg" height="100"> <img src="https://github.com/EugenMayer/concourseci-server-boilerplate/blob/master/assets/openldap.png" height="100">
 
 A boilerplate for you to quick-start a concourse stack with most of the features you would need in production.
 It auto-configures `Concourse CI` and lets you configure most of the things using ENV variables for customization.
@@ -35,15 +35,21 @@ Use cases would be:
 - test-drive upgrades of your concourse
 - developing new pipelines before you deploy it to your production server, like this [concourse-app-release-lifecycle-example](https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example)
 
-## Start
+## Usage
 
 To just go for it:
 
-```
-docker-compose --env-file .env.local.sample up
+`cp .env.local.sample .env`
+
+```bash
+docker-compose up
+
+# or
+
+./start.sh
 ```
 
-Now you have the default setup. Access it using `http://127.0.0.1:8080` with the user `included1`, password `included`
+Now you have the default setup. Access it using `http://localhost` (via traefik) with the user `included1`, password `included`
 
 ## Customizing
 
@@ -54,47 +60,33 @@ I. The default setup includes the following aspects
 - `traefik` SSL offloading / reverse proxy (with disabled SSL by default)
 - `vault` configured (as secret store), see `docker-compose-vault.yml`
 - `minio` configured (as a s3 alike artifac storage store), see `docker-compose-minio.yml`
-- docker based workers `docker-compose-worker.yml`
-- standalone workers (offsite) `docker-compose-worker-standalone.yml`
 - `ldap` auth (an example ldap server is included, see `docker-compose-ldap-auth.yml` )
 - local user auth `docker-compose-local-auth.yml`
+- docker based workers `docker-compose-worker.yml`
+- standalone workers (offsite) `docker-compose-worker-standalone.yml`
 
-You can configure which aspects you want to pick by modifying `COMPOSE_FILE` in .env. So disable `vault` or `minio` or `ldap` as you please.
+You can configure which aspects you want to pick by modifying `COMPOSE_FILE` in `.env`. So disable `vault` or `minio` or `ldap` as you please.
+
+Please always consider to run your workers on a different machine / docker-engine then web in `production`.. they really kill each other.
+I recommend running a standalone-worker on a non-docker engine VM in production (or several).
 
 II. For the authentication, you have to pick at least `ldap` or `local` for auth
 
 II. This will start a concourse server right up, including your aspects. The default is vault and ldap auth
 
     docker-compose up
+    # or
+    ./start.sh
 
-## Configuration
+## Examples
 
-Now install the cli
+See examples including all the scripts to test your login, deploy test pipelines and pre-fill your vault for pipeline
+testing
 
-    # MacOS
-    brew cask install fly
+### Vault
 
-    # linux, e.g. arch AUR
-    yay -S concourse-fly-bin
-
-    # or download from the running concourse server
-
-    # MacOS
-    curl -o fly http://localhost:8080/api/v1/cli?arch=amd64&platform=darwin
-
-    # or Linux
-    curl -o fly http://localhost:8080/api/v1/cli?arch=amd64&platform=linux
-
-now login with the cli against our local server
-
-    fly -t test_main login -c http://localhost:8080
-    # see "Login/Credentials" for the login information
-
-update fly
-
-    fly -t test_main sync
-
-Adjustments can be done by editing the .env file
+See the `examples/run_3_vault_test.sh` script to see how consul con be setup and started with a vault based pipeline
+`examples/vaults-based`
 
 ### Login / Credentials
 
@@ -117,7 +109,36 @@ See the [Concourse Local AUTH docs](https://concourse-ci.org/local-auth.html) if
 
 See "Login/Credentials" section for the login information, access the GUI :
 
-    http://127.0.0.1:8080
+    http://localhost
+
+### Cli Configuration
+
+Now install the cli
+
+    # MacOS
+    brew cask install fly
+
+    # linux, e.g. arch AUR
+    yay -S concourse-fly-bin
+
+    # or download from the running concourse server
+
+    # MacOS
+    curl -o fly http://localhost/api/v1/cli?arch=amd64&platform=darwin
+
+    # or Linux
+    curl -o fly http://localhost/api/v1/cli?arch=amd64&platform=linux
+
+now login with the cli against our local server
+
+    fly -t test_main login -c http://localhost
+    # see "Login/Credentials" for the login information
+
+update fly
+
+    fly -t test_main sync
+
+Adjustments can be done by editing the .env file
 
 ### Create/Deploy a pipeline
 
@@ -143,7 +164,7 @@ To login, connect to
 
 You will need to create at leas one bucket to use it, obviously.
 See https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example for an example on how to use Minio
-but basically its just the same as you would use AWS s3 - it's a "immitation"
+but basically its just the same as you would use AWS s3 - it's a "imitation"
 
 ## Intercept into a broken / running container
 
@@ -189,40 +210,3 @@ since the above is all done using the server token, you can try the client token
 
     vault login -method=cert
     vault kv get secret/concourse/main/main/myvalue
-
-### Running the standalone worker
-
-`docker-compose-worker-standalone.yml` illustrates on how to utilize `eugenmayer/concourse-worker-configurator` to run an offsite standalone worker using ENV variables to deploy
-the `worker private key` and `tsa public key`.
-
-All you basically need is setting this ENV variables in the `eugenmayer/concourse-worker-configurator` container
-
-- TSA_EXISTING_PUBLIC_KEY = < the public key of the TSA, usually in `/concourse-keys/tsa_host_key.pub`
-- WORKER_EXISTING_PRIVATE_KEY = the private key of an existing worker (shared key) or an key you deployed into authorized_workers on the tsa
-
-And set this on the worker itself
-
-- CONCOURSE_TSA_HOST
-- CONCOURSE_TSA_PORT ( should be 2222)
-  To test this locally you need to
-
-```bash
-
-docker-composer up
-
-# now extract the /concourse-keys/worker_key from the worker container and
-# replace all newlines with an \n to make it a oneliner ( dotenv does not support multiline yet )
-# put the value into ..standalone-worker-env WORKER_EXISTING_PRIVATE_KEY
-# also extract /concourse-keys/tsa_host_key.pub (its already a one liner)
-# put the value into ..standalone-worker-env TSA_EXISTING_PUBLIC_KEY
-# adjust CONCOURSE_TSA_HOST if you have a different lo0 ip
-
-docker-compose -f docker-compose-worker-standalone.yml up
-```
-
-## Examples
-
-### Vault
-
-See the `run_3_vault_test.sh` script to see how consul con be setup and started with a vault based pipeline
-`example/vaults-based`

@@ -3,7 +3,7 @@ version: '3'
 services:
   # see https://github.com/concourse/concourse-docker/blob/master/Dockerfile
   worker:
-    image: concourse/concourse:${CONCOURSE_VERSION}
+    image: concourse/concourse:${CONCOURSE_VERSION:-7.5}
     command: worker
     privileged: true
     stop_signal: SIGUSR2
@@ -14,9 +14,9 @@ services:
       - concourse-keys-worker:/concourse-keys
       - concourse-worker1-state:/worker-state
     environment:
-      # port is mandatory with 4.x .. port syntax required
       CONCOURSE_TSA_HOST: 'web:2222'
-      CONCOURSE_BAGGAGECLAIM_DRIVER: ${CONCOURSE_BAGGAGECLAIM_DRIVER}
+      CONCOURSE_BAGGAGECLAIM_DRIVER: ${CONCOURSE_BAGGAGECLAIM_DRIVER:-overlay}
+      CONCOURSE_RUNTIME: ${CONTAINER_RUNTIME:-containerd}
 
 volumes:
   concourse-worker1-state:
