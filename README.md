@@ -30,6 +30,7 @@ and lets you select the features you actually need in `.env`.
 
 Use cases would be:
 
+- Run Concourse CI in production
 - Test concourse for or in your team
 - test-drive upgrades of your concourse
 - developing new pipelines before you deploy it to your production server, like this [concourse-app-release-lifecycle-example](https://github.com/kw-concourse-example/concourse-app-release-lifecycle-example)
